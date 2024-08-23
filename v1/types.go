@@ -42,6 +42,7 @@ const (
 	WsEventChannelUpdated    string = "channel_updated"
 	WsEventSettingsUpdated   string = "settings_updated"
 	WsEventChatsDeleted      string = "chats_deleted"
+	WsEventFileUploaded      string = "file_uploaded"
 
 	WsOptionIncludeMassCommunication WsOption = "include_mass_communication"
 
@@ -492,13 +493,21 @@ type (
 	}
 
 	Attachment struct {
-		ID         string  `json:"id"`
-		Mime       string  `json:"type"`
-		Caption    string  `json:"caption"`
-		Size       uint64  `json:"size"`
-		PreviewURL *string `json:"preview_url,omitempty"`
-		Height     *uint64 `json:"height,omitempty"`
-		Width      *uint64 `json:"width,omitempty"`
+		File
+
+		Caption string `json:"caption"`
+	}
+
+	File struct {
+		ID            string  `json:"id"`
+		Mime          string  `json:"type"`
+		Type          string  `json:"kind"`
+		Size          uint64  `json:"size"`
+		PreviewURL    *string `json:"preview_url,omitempty"`
+		Height        *uint64 `json:"height,omitempty"`
+		Width         *uint64 `json:"width,omitempty"`
+		Duration      int     `json:"duration,omitempty"`
+		Transcription string  `json:"transcription,omitempty"`
 	}
 
 	MessageProduct struct {
@@ -813,5 +822,9 @@ type (
 
 	WsEventWaitingChatUpdatedData struct {
 		Chat *WaitingChat `json:"chat"`
+	}
+
+	WsEventFileUploadedData struct {
+		File *File `json:"file"`
 	}
 )
